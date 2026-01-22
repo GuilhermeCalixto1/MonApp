@@ -9,6 +9,7 @@ const descricao = document.getElementById('descricao')
 const valor = document.getElementById('valor')
 const btnCadastro = document.getElementById('btnCadastro')
 const tabela = document.getElementById('tabela')
+const btnPesquisar = document.getElementById('btnPesquisar')
 
 /* ==========================================================
    SEÇÃO 2: CLASSE DESPESA (MODELO)
@@ -50,6 +51,23 @@ function gravar(d) {
 /* ==========================================================
    SEÇÃO 4: CONTROLLER (LÓGICA DA TELA)
    ========================================================== */
+   
+  if (btnPesquisar) {
+    btnPesquisar.addEventListener('click',function(){
+      let id = localStorage.getItem('id');
+      let arrayObjeto= []
+      
+      
+      for(i=0;i<=id;i++){
+    let objetoString = localStorage.getItem(i)
+    if(objetoString != null){
+    let objetoPronto = JSON.parse(objetoString)
+    arrayObjeto.push(objetoPronto)
+      }}
+      console.log(arrayObjeto)
+  })
+  }
+  
 function estiloModal(tipoModal) {
     const titulo = document.getElementById('exampleModalLabel')
     const botao = document.getElementById('botaoModal')
