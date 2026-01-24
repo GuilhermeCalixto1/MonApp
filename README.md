@@ -46,3 +46,18 @@ O sistema possui as seguintes funções:
    git clone https://github.com/GuilhermeCalixto1/app-orcamento-pessoal.git
 
    Abra a pasta e inicie a página index.html
+
+## 👨‍💻 Autor
+<div align="center">
+
+<img style="border-radius: 50%;" src="https://wsrv.nl/?url=github.com/GuilhermeCalixto1.png&w=400&h=400&mask=circle" width="200em" alt="Foto de Perfil"/>
+
+<br>
+
+<h3>Guilherme Calixto</h3> <p>Estudante de Engenharia de Software</p>
+
+<a href="https://www.linkedin.com/in/guilherme-calixto-544b8a1b6" target="_blank">
+<img src="https://content.linkedin.com/content/dam/me/business/en-us/amp/xbu/linkedin-revised-brand-guidelines/linkedin-logo/fg/brandg-linkedinlogo-hero-logo-dsk-v01.png/jcr:content/renditions/brandg-linkedinlogo-hero-logo-dsk-v01-2x.png" width="180em" />
+</a>
+
+</div>
