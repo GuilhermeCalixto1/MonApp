@@ -19,9 +19,9 @@
 
 Este projeto foi desenvolvido utilizando as seguintes tecnologias:
 
-- **[HTML5](https://developer.mozilla.org/pt-BR/docs/Web/HTML):** 
-- **[CSS3](https://developer.mozilla.org/pt-BR/docs/Web/CSS):** 
-- **[Bootstrap](https://getbootstrap.com/):** 
+- **[HTML5](https://developer.mozilla.org/pt-BR/docs/Web/HTML)** 
+- **[CSS3](https://developer.mozilla.org/pt-BR/docs/Web/CSS)** 
+- **[Bootstrap](https://getbootstrap.com/)** 
 - **[JavaScript (ES6+)](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript):** Lógica da aplicação utilizando **Programação Orientada a Objetos (Classes)**.
 - **LocalStorage:** Banco de dados do navegador para persistir os dados mesmo recarregando a página.
 
@@ -31,16 +31,18 @@ Este projeto foi desenvolvido utilizando as seguintes tecnologias:
 
 O sistema possui as seguintes funções:
 
-- [x] **Cadastrar Despesa:** Registro de data, tipo (Alimentação, Lazer, etc.), descrição e valor.
-- [x] **Validação de Dados:** Impede o cadastro se houver campos em branco, exibindo um Modal de alerta.
-- [x] **Listagem:** Exibe todas as despesas salvas de forma organizada.
-- [x] **Filtro Avançado:** Permite pesquisar despesas por dia, mês, ano, tipo ou valor específico.
-- [x] **Exclusão:** Botão para remover despesas individuais do banco de dados.
+- ✔️ **Cadastrar Despesa:** Registro de data, tipo (Alimentação, Lazer, etc.), descrição e valor.
+- ✔️ **Validação de Dados:** Impede o cadastro se houver campos em branco, exibindo um Modal de alerta.
+- ✔️ **Listagem:** Exibe todas as despesas salvas de forma organizada.
+- ✔️ **Filtro Avançado:** Permite pesquisar despesas por dia, mês, ano, tipo ou valor específico.
+- ✔️ **Exclusão:** Botão para remover despesas individuais do banco de dados.
 
 ---
 
 ## 📂 Como rodar o projeto
 
-1. **Clone o repositório:**
+ **Clone o repositório:**
 
    git clone https://github.com/GuilhermeCalixto1/app-orcamento-pessoal.git
+
+   Abrir a página index.html
