@@ -45,4 +45,4 @@ O sistema possui as seguintes funções:
 
    git clone https://github.com/GuilhermeCalixto1/app-orcamento-pessoal.git
 
-   Abrir a página index.html
+   Abra a pasta e inicie a página index.html
