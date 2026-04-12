@@ -9,8 +9,8 @@
 ## 📸 Demonstração
 
 <div align ="center">
-  <img src="./img/Captura de tela 2026-01-24 164339.png" width="700px" alt="Print do Projeto" />
-  <img src="./img/Captura de tela 2026-01-24 164416.png" width="700px" alt="Print do Projeto" />
+  <img src="./img/orcamento.png" width="700px" alt="Print do Projeto" />
+  <img src="./img/orcamento2.png" width="700px" alt="Print do Projeto" />
 </div>
 
 ---
@@ -19,9 +19,9 @@
 
 Este projeto foi desenvolvido utilizando as seguintes tecnologias:
 
-- **[HTML5](https://developer.mozilla.org/pt-BR/docs/Web/HTML)** 
-- **[CSS3](https://developer.mozilla.org/pt-BR/docs/Web/CSS)** 
-- **[Bootstrap](https://getbootstrap.com/)** 
+- **[HTML5](https://developer.mozilla.org/pt-BR/docs/Web/HTML)**
+- **[CSS3](https://developer.mozilla.org/pt-BR/docs/Web/CSS)**
+- **[Bootstrap](https://getbootstrap.com/)**
 - **[JavaScript (ES6+)](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript):** Lógica da aplicação utilizando **Programação Orientada a Objetos (Classes)**.
 - **LocalStorage:** Banco de dados do navegador para persistir os dados mesmo recarregando a página.
 
@@ -41,13 +41,14 @@ O sistema possui as seguintes funções:
 
 ## 📂 Como rodar o projeto
 
- **Clone o repositório:**
+**Clone o repositório:**
 
-   git clone https://github.com/GuilhermeCalixto1/app-orcamento-pessoal.git
+git clone https://github.com/GuilhermeCalixto1/app-orcamento-pessoal.git
 
-   Abra a pasta e inicie a página index.html
+Abra a pasta e inicie a página index.html
 
 ## 👨‍💻 Autor
+
 <div align="center">
 
 <img style="border-radius: 50%;" src="https://wsrv.nl/?url=github.com/GuilhermeCalixto1.png&w=400&h=400&mask=circle" width="200em" alt="Foto de Perfil"/>
