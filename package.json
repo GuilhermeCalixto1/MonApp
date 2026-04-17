@@ -1,0 +1,41 @@
+{
+  "name": "app-orcamento-pessoal-react",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "rsbuild dev",
+    "build": "rsbuild build",
+    "preview": "rsbuild preview",
+    "test": "vitest",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.5",
+    "bun": "^1.3.12",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@rsbuild/core": "^1.5.11",
+    "@rsbuild/plugin-react": "^1.4.1",
+    "@tailwindcss/postcss": "^4.2.2",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.0",
+    "globals": "^17.5.0",
+    "jsdom": "^29.0.2",
+    "postcss": "^8.5.10",
+    "prettier": "^3.8.3",
+    "tailwindcss": "^4.2.2",
+    "vitest": "^4.1.4"
+  }
+}
