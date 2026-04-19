@@ -68,7 +68,9 @@ export default function Cadastro() {
         <div className="synth-shell__frame">
           <header className="synth-hero">
             <h1 className="synth-title">Adicionar nova despesa</h1>
-            <p className="synth-hero__subtitle">Preencha os campos abaixo para registrar um novo gasto.</p>
+            <p className="synth-hero__subtitle">
+              Preencha os campos abaixo para registrar um novo gasto.
+            </p>
           </header>
 
           <div className="synth-card">
@@ -77,13 +79,20 @@ export default function Cadastro() {
                 <label className="synth-label" htmlFor="tipo">
                   Tipo
                 </label>
-                <select id="tipo" className="synth-control synth-control--select" name="tipo" value={form.tipo} onChange={onChange}>
+                <select
+                  id="tipo"
+                  className="synth-control synth-control--select"
+                  name="tipo"
+                  value={form.tipo}
+                  onChange={onChange}
+                >
                   <option value="">Selecionar tipo</option>
                   <option value="1">Alimentacao</option>
                   <option value="2">Educacao</option>
                   <option value="3">Lazer</option>
                   <option value="4">Saude</option>
                   <option value="5">Transporte</option>
+                  <option value="6">Outros</option>
                 </select>
               </div>
 
@@ -160,11 +169,19 @@ export default function Cadastro() {
               </div>
 
               <div className="synth-actions">
-                <button type="button" className="synth-button synth-button--primary" onClick={handleCadastrar}>
+                <button
+                  type="button"
+                  className="synth-button synth-button--primary"
+                  onClick={handleCadastrar}
+                >
                   Salvar despesa
                 </button>
 
-                <button type="button" className="synth-button synth-button--secondary" onClick={() => setForm(initialForm)}>
+                <button
+                  type="button"
+                  className="synth-button synth-button--secondary"
+                  onClick={() => setForm(initialForm)}
+                >
                   Cancelar
                 </button>
               </div>

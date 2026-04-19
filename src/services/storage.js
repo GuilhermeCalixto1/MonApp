@@ -6,6 +6,7 @@ const TIPOS_DESPESA = {
   3: 'Lazer',
   4: 'Saude',
   5: 'Transporte',
+  6: 'Outros',
 };
 
 export function initStorage() {

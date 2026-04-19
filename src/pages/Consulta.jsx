@@ -146,6 +146,7 @@ export default function Consulta() {
                   <option value="3">Lazer</option>
                   <option value="4">Saude</option>
                   <option value="5">Transporte</option>
+                  <option value="6">Outros</option>
                 </select>
               </div>
 
@@ -180,11 +181,19 @@ export default function Consulta() {
               </div>
 
               <div className="synth-actions">
-                <button type="button" className="synth-button synth-button--primary" onClick={handlePesquisar}>
+                <button
+                  type="button"
+                  className="synth-button synth-button--primary"
+                  onClick={handlePesquisar}
+                >
                   Pesquisar
                 </button>
 
-                <button type="button" className="synth-button synth-button--secondary" onClick={handleLimpar}>
+                <button
+                  type="button"
+                  className="synth-button synth-button--secondary"
+                  onClick={handleLimpar}
+                >
                   Limpar filtros
                 </button>
               </div>

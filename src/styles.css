@@ -27,17 +27,24 @@ body {
   position: sticky;
   top: 0;
   z-index: 1030;
-  padding: 0.9rem 0;
+  padding: 0.3rem 0;
   background: linear-gradient(180deg, rgba(9, 14, 40, 0.95), rgba(19, 8, 49, 0.88));
   border-bottom: 1px solid rgba(103, 242, 255, 0.18);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.24);
   backdrop-filter: blur(14px);
 }
 
+.synth-navbar .container {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .synth-navbar__brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0;
+  padding: 0 !important;
+  margin: 0;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -46,6 +53,13 @@ body {
 
 .synth-navbar__brand img {
   flex: 0 0 auto;
+}
+
+.synth-navbar__app-name {
+  height: 3rem;
+  width: auto;
+  display: block;
+  margin-left: -5.5rem;
 }
 
 .synth-navbar__links {
@@ -63,6 +77,12 @@ body {
     border-color 0.15s ease,
     transform 0.15s ease,
     color 0.15s ease;
+}
+
+.synth-navbar__logout {
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
 }
 
 .synth-navbar__link:hover,
@@ -101,7 +121,18 @@ body {
   background:
     radial-gradient(circle at 50% 50%, rgba(106, 255, 246, 0.26), transparent 68%),
     linear-gradient(180deg, rgba(210, 61, 212, 0.14), rgba(45, 8, 77, 0.2));
-  clip-path: polygon(52% 0, 61% 16%, 76% 16%, 64% 28%, 70% 44%, 52% 35%, 34% 44%, 40% 28%, 28% 16%, 43% 16%);
+  clip-path: polygon(
+    52% 0,
+    61% 16%,
+    76% 16%,
+    64% 28%,
+    70% 44%,
+    52% 35%,
+    34% 44%,
+    40% 28%,
+    28% 16%,
+    43% 16%
+  );
   filter: drop-shadow(0 0 20px rgba(74, 239, 255, 0.35));
 }
 
@@ -184,7 +215,9 @@ body {
   color: #66f4ff;
   background: linear-gradient(180deg, rgba(22, 5, 49, 0.8), rgba(48, 10, 85, 0.9));
   border: 2px solid rgba(98, 242, 255, 0.8);
-  box-shadow: 0 0 18px rgba(86, 229, 255, 0.55), inset 0 0 18px rgba(235, 68, 255, 0.2);
+  box-shadow:
+    0 0 18px rgba(86, 229, 255, 0.55),
+    inset 0 0 18px rgba(235, 68, 255, 0.2);
   font-size: 1.8rem;
   font-weight: 900;
 }
@@ -194,7 +227,9 @@ body {
   line-height: 0.9;
   letter-spacing: 0.16em;
   color: #71f2ff;
-  text-shadow: 0 0 10px rgba(78, 244, 255, 0.75), 0 0 22px rgba(255, 78, 240, 0.4);
+  text-shadow:
+    0 0 10px rgba(78, 244, 255, 0.75),
+    0 0 22px rgba(255, 78, 240, 0.4);
 }
 
 .synth-brand__subtitle {
@@ -211,7 +246,9 @@ body {
   font-size: clamp(1.4rem, 3vw, 2.7rem);
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  text-shadow: 0 0 12px rgba(68, 233, 255, 0.75), 0 0 30px rgba(247, 72, 255, 0.4);
+  text-shadow:
+    0 0 12px rgba(68, 233, 255, 0.75),
+    0 0 30px rgba(247, 72, 255, 0.4);
 }
 
 .synth-card {
@@ -261,13 +298,17 @@ body {
   color: #f3efff;
   padding: 0.95rem 1rem;
   font: inherit;
-  box-shadow: 0 0 16px rgba(51, 219, 255, 0.35), inset 0 0 20px rgba(255, 85, 240, 0.05);
+  box-shadow:
+    0 0 16px rgba(51, 219, 255, 0.35),
+    inset 0 0 20px rgba(255, 85, 240, 0.05);
 }
 
 .synth-control:focus {
   outline: none;
   border-color: #ff5fff;
-  box-shadow: 0 0 18px rgba(255, 92, 246, 0.55), 0 0 24px rgba(81, 233, 255, 0.35);
+  box-shadow:
+    0 0 18px rgba(255, 92, 246, 0.55),
+    0 0 24px rgba(81, 233, 255, 0.35);
 }
 
 .synth-control::placeholder {
@@ -307,7 +348,9 @@ body {
   border-radius: 0.85rem;
   padding: 0.7rem 1rem;
   background: rgba(40, 10, 69, 0.92);
-  box-shadow: 0 0 18px rgba(255, 92, 246, 0.3), inset 0 0 20px rgba(81, 233, 255, 0.05);
+  box-shadow:
+    0 0 18px rgba(255, 92, 246, 0.3),
+    inset 0 0 20px rgba(81, 233, 255, 0.05);
 }
 
 .synth-money__prefix {
@@ -376,6 +419,56 @@ body {
     0 0 0 2px rgba(255, 77, 233, 0.25),
     0 0 22px rgba(255, 74, 230, 0.35),
     inset 0 0 18px rgba(255, 74, 230, 0.12);
+}
+
+.synth-home__card {
+  max-width: 760px;
+}
+
+.synth-home__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.synth-home__action-link {
+  min-height: 4rem;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+}
+
+.synth-login__frame {
+  width: min(100%, 700px);
+}
+
+.synth-login__card {
+  max-width: 540px;
+}
+
+.synth-login__form {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.synth-login__button {
+  min-height: 3.5rem;
+}
+
+.synth-login__erro {
+  margin: 0;
+  color: #ff9cca;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+}
+
+.synth-login__hint {
+  margin: 0;
+  color: rgba(245, 236, 255, 0.75);
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
 }
 
 .synth-card,
@@ -457,6 +550,10 @@ body {
   }
 
   .synth-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .synth-home__actions {
     grid-template-columns: 1fr;
   }
 }
