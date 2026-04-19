@@ -23,26 +23,75 @@ body {
   background: rgba(0, 0, 0, 0.2);
 }
 
+.synth-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  padding: 0.9rem 0;
+  background: linear-gradient(180deg, rgba(9, 14, 40, 0.95), rgba(19, 8, 49, 0.88));
+  border-bottom: 1px solid rgba(103, 242, 255, 0.18);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(14px);
+}
+
+.synth-navbar__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #f4fbff !important;
+}
+
+.synth-navbar__brand img {
+  flex: 0 0 auto;
+}
+
+.synth-navbar__links {
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.synth-navbar__link {
+  padding: 0.65rem 1rem !important;
+  border-radius: 999px;
+  color: rgba(240, 247, 255, 0.86) !important;
+  border: 1px solid transparent;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease,
+    color 0.15s ease;
+}
+
+.synth-navbar__link:hover,
+.synth-navbar__link.active {
+  color: #ffffff !important;
+  background: linear-gradient(180deg, rgba(52, 244, 255, 0.18), rgba(255, 77, 233, 0.12));
+  border-color: rgba(103, 242, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.navbar-toggler {
+  border-color: rgba(103, 242, 255, 0.35);
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 0.2rem rgba(103, 242, 255, 0.14);
+}
+
 .synth-page {
   position: relative;
   min-height: 100vh;
   overflow: hidden;
   padding: 3rem 1rem;
+  background: url('./images/bg-Synth.webp') center / cover no-repeat fixed;
 }
 
 .synth-page__bg {
   position: absolute;
   pointer-events: none;
-}
-
-.synth-page__bg--left {
-  inset: 8% auto auto -8%;
-  width: 18rem;
-  height: 18rem;
-  border-radius: 50%;
-  background: linear-gradient(180deg, #ffd66d 0%, #ff8e4f 45%, #c3257a 100%);
-  box-shadow: 0 0 80px rgba(255, 198, 90, 0.5);
-  opacity: 0.9;
 }
 
 .synth-page__bg--right {
@@ -110,6 +159,13 @@ body {
 .synth-hero {
   text-align: center;
   padding: 0.75rem 0 1.75rem;
+}
+
+.synth-hero__subtitle {
+  margin: 0.8rem 0 0;
+  color: rgba(246, 242, 255, 0.82);
+  font-size: 0.98rem;
+  line-height: 1.5;
 }
 
 .synth-brand {

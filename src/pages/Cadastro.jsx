@@ -67,15 +67,8 @@ export default function Cadastro() {
       <section className="synth-shell container-fluid">
         <div className="synth-shell__frame">
           <header className="synth-hero">
-            <div className="synth-brand">
-              <div className="synth-brand__mark">S</div>
-              <div>
-                <div className="synth-brand__title">SYNTH</div>
-                <div className="synth-brand__subtitle">EXPENSE TRACKER</div>
-              </div>
-            </div>
-
             <h1 className="synth-title">Adicionar nova despesa</h1>
+            <p className="synth-hero__subtitle">Preencha os campos abaixo para registrar um novo gasto.</p>
           </header>
 
           <div className="synth-card">
