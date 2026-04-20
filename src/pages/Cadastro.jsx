@@ -9,6 +9,7 @@ const initialForm = {
   mes: '',
   dia: '',
   tipo: '',
+  formaPagamento: '',
   descricao: '',
   valor: '',
 };
@@ -97,17 +98,37 @@ export default function Cadastro() {
               </div>
 
               <div className="synth-field synth-field--wide">
+                <label className="synth-label" htmlFor="formaPagamento">
+                  Forma de pagamento
+                </label>
+                <select
+                  id="formaPagamento"
+                  className="synth-control synth-control--select"
+                  name="formaPagamento"
+                  value={form.formaPagamento}
+                  onChange={onChange}
+                >
+                  <option value="">Selecionar forma de pagamento</option>
+                  <option value="1">Débito</option>
+                  <option value="2">Crédito</option>
+                  <option value="3">Pix</option>
+                  <option value="4">Dinheiro</option>
+                  <option value="5">Alelo</option>
+                </select>
+              </div>
+
+              <div className="synth-field synth-field--wide">
                 <label className="synth-label" htmlFor="descricao">
                   Descricao
                 </label>
                 <textarea
                   id="descricao"
-                  className="synth-control synth-control--textarea"
+                  className="synth-control synth-control--textarea synth-control--textarea-compact"
                   placeholder="Ex: Almoço no restaurante neon..."
                   name="descricao"
                   value={form.descricao}
                   onChange={onChange}
-                  rows="6"
+                  rows="1"
                 />
               </div>
 

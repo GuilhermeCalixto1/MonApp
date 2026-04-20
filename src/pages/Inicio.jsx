@@ -32,6 +32,13 @@ export default function Inicio() {
               >
                 Entrar em Consulta
               </Link>
+
+              <Link
+                to="/dashboard"
+                className="synth-button synth-button--utility synth-home__action-link"
+              >
+                Abrir Dashboard
+              </Link>
             </div>
           </div>
         </div>
