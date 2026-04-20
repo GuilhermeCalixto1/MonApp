@@ -39,8 +39,20 @@ function FormaPagamentoIcon({ formaPagamento }) {
             stroke="currentColor"
             strokeWidth="1.5"
           />
-          <path d="M7 9h10" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-          <path d="M12 15V5.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+          <path
+            d="M7 9h10"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+          />
+          <path
+            d="M12 15V5.5"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+          />
           <path
             d="M9.3 7.8 12 5.1l2.7 2.7"
             fill="none"
@@ -65,8 +77,20 @@ function FormaPagamentoIcon({ formaPagamento }) {
             stroke="currentColor"
             strokeWidth="1.5"
           />
-          <path d="M7 9h10" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-          <path d="M12 8.5v10" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+          <path
+            d="M7 9h10"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+          />
+          <path
+            d="M12 8.5v10"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+          />
           <path
             d="M9.3 16.2 12 18.9l2.7-2.7"
             fill="none"
@@ -87,7 +111,15 @@ function FormaPagamentoIcon({ formaPagamento }) {
     case '4':
       return (
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <rect x="3.5" y="6.5" width="17" height="11" rx="2.5" fill="currentColor" opacity="0.16" />
+          <rect
+            x="3.5"
+            y="6.5"
+            width="17"
+            height="11"
+            rx="2.5"
+            fill="currentColor"
+            opacity="0.16"
+          />
           <rect
             x="4"
             y="7"
@@ -98,15 +130,35 @@ function FormaPagamentoIcon({ formaPagamento }) {
             stroke="currentColor"
             strokeWidth="1.5"
           />
-          <path d="M6.5 10.2h11" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-          <path d="M6.5 13.8h6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+          <path
+            d="M6.5 10.2h11"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+          />
+          <path
+            d="M6.5 13.8h6"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+          />
           <circle cx="17.2" cy="13.4" r="1.1" fill="currentColor" />
         </svg>
       );
     case '5':
       return (
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <rect x="3.5" y="6.5" width="17" height="11" rx="2.5" fill="currentColor" opacity="0.16" />
+          <rect
+            x="3.5"
+            y="6.5"
+            width="17"
+            height="11"
+            rx="2.5"
+            fill="currentColor"
+            opacity="0.16"
+          />
           <rect
             x="4"
             y="7"
@@ -122,7 +174,13 @@ function FormaPagamentoIcon({ formaPagamento }) {
             fill="currentColor"
           />
           <path d="M11 9.3v2.4" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" />
-          <path d="M9.8 10.5h2.4" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" />
+          <path
+            d="M9.8 10.5h2.4"
+            fill="none"
+            stroke="#fff"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
         </svg>
       );
     default:
@@ -203,7 +261,9 @@ export default function Consulta() {
           <div className="synth-card">
             <div className="synth-card__inner">
               <div className="synth-field">
-                <label className="synth-label" htmlFor="ano">Ano</label>
+                <label className="synth-label" htmlFor="ano">
+                  Ano
+                </label>
                 <select
                   id="ano"
                   className="synth-control synth-control--select"
@@ -213,13 +273,17 @@ export default function Consulta() {
                 >
                   <option value="">Todos</option>
                   {anos.map((ano) => (
-                    <option key={ano} value={String(ano)}>{ano}</option>
+                    <option key={ano} value={String(ano)}>
+                      {ano}
+                    </option>
                   ))}
                 </select>
               </div>
 
               <div className="synth-field">
-                <label className="synth-label" htmlFor="mes">Mes</label>
+                <label className="synth-label" htmlFor="mes">
+                  Mes
+                </label>
                 <select
                   id="mes"
                   className="synth-control synth-control--select"
@@ -244,7 +308,9 @@ export default function Consulta() {
               </div>
 
               <div className="synth-field synth-consulta__desktop-filter">
-                <label className="synth-label" htmlFor="dia">Dia</label>
+                <label className="synth-label" htmlFor="dia">
+                  Dia
+                </label>
                 <select
                   id="dia"
                   className="synth-control synth-control--select"
@@ -262,7 +328,9 @@ export default function Consulta() {
               </div>
 
               <div className="synth-field">
-                <label className="synth-label" htmlFor="tipo">Tipo</label>
+                <label className="synth-label" htmlFor="tipo">
+                  Tipo
+                </label>
                 <select
                   id="tipo"
                   className="synth-control synth-control--select"
@@ -281,7 +349,9 @@ export default function Consulta() {
               </div>
 
               <div className="synth-field synth-consulta__desktop-filter">
-                <label className="synth-label" htmlFor="formaPagamento">Forma de pagamento</label>
+                <label className="synth-label" htmlFor="formaPagamento">
+                  Forma de pagamento
+                </label>
                 <select
                   id="formaPagamento"
                   className="synth-control synth-control--select"
@@ -299,7 +369,9 @@ export default function Consulta() {
               </div>
 
               <div className="synth-field synth-field--wide synth-consulta__desktop-filter">
-                <label className="synth-label" htmlFor="descricao">Descricao</label>
+                <label className="synth-label" htmlFor="descricao">
+                  Descricao
+                </label>
                 <input
                   id="descricao"
                   type="text"
@@ -312,7 +384,9 @@ export default function Consulta() {
               </div>
 
               <div className="synth-field synth-consulta__desktop-filter">
-                <label className="synth-label" htmlFor="valor">Valor</label>
+                <label className="synth-label" htmlFor="valor">
+                  Valor
+                </label>
                 <input
                   id="valor"
                   type="text"
@@ -325,11 +399,19 @@ export default function Consulta() {
               </div>
 
               <div className="synth-actions synth-consulta__actions">
-                <button type="button" className="synth-button synth-button--primary" onClick={handlePesquisar}>
+                <button
+                  type="button"
+                  className="synth-button synth-button--primary"
+                  onClick={handlePesquisar}
+                >
                   Pesquisar
                 </button>
 
-                <button type="button" className="synth-button synth-button--secondary" onClick={handleLimpar}>
+                <button
+                  type="button"
+                  className="synth-button synth-button--secondary"
+                  onClick={handleLimpar}
+                >
                   Limpar filtros
                 </button>
 
@@ -393,7 +475,11 @@ export default function Consulta() {
                         <td data-label="Descricao">{despesa.descricao}</td>
                         <td data-label="Valor">{`R$ ${despesa.valor}`}</td>
                         <td data-label="Acao" className="synth-table__actions">
-                          <button type="button" className="synth-button synth-button--danger" onClick={() => handleRemover(despesa.id)}>
+                          <button
+                            type="button"
+                            className="synth-button synth-button--danger"
+                            onClick={() => handleRemover(despesa.id)}
+                          >
                             Excluir
                           </button>
                         </td>
@@ -416,7 +502,10 @@ export default function Consulta() {
                       const pagamento = obterFormaPagamentoInfo(despesa.formaPagamento);
 
                       return (
-                        <article key={`mobile-${despesa.id}`} className="synth-consulta__mobile-card">
+                        <article
+                          key={`mobile-${despesa.id}`}
+                          className="synth-consulta__mobile-card"
+                        >
                           <div className="synth-consulta__mobile-card-head">
                             <div className="synth-consulta__mobile-date">{`${despesa.dia}/${despesa.mes}/${despesa.ano}`}</div>
                             <button

@@ -297,294 +297,300 @@ export default function Dashboard() {
             <div className="synth-dashboard__left">
               <div className="synth-dashboard__stack">
                 <div className="synth-dashboard__card">
-              <label
-                htmlFor="dashboard-month"
-                className="synth-label synth-dashboard__field-label"
-              >
-                Selecione o mes
-              </label>
-              <input
-                id="dashboard-month"
-                type="month"
-                value={monthControlValue}
-                onChange={(event) => setMonthControlValue(event.target.value)}
-                className="synth-control synth-dashboard__month-input"
-              />
-              <div className="synth-dashboard__month-actions">
-                <button
-                  type="button"
-                  onClick={() => setMonthControlValue((prev) => shiftMonthValue(prev, -1))}
-                  className="synth-dashboard__ghost-btn"
-                >
-                  Mes anterior
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setMonthControlValue((prev) => shiftMonthValue(prev, 1))}
-                  className="synth-dashboard__ghost-btn"
-                >
-                  Proximo mes
-                </button>
-              </div>
-              <p className="synth-dashboard__hint">
-                Total no mes: {formatMoney(totalFiltrado)}
-              </p>
-            </div>
-
-            <div className="synth-dashboard__card">
-              <h2 className="synth-dashboard__card-title">
-                Percentual por tipo (mes selecionado)
-              </h2>
-
-              <div className="synth-dashboard__type-chart">
-                <div
-                  className="synth-dashboard__donut"
-                  style={{ background: tipoDistribution.background }}
-                >
-                  <div className="synth-dashboard__donut-core" />
-                </div>
-
-                <div className="synth-dashboard__legend">
-                  {tipoDistribution.entries.length === 0 && (
-                    <p className="synth-dashboard__empty-note">Sem dados para o mes selecionado.</p>
-                  )}
-                  {tipoDistribution.entries.map((entry) => (
-                    <div key={entry.label} className="synth-dashboard__legend-item">
-                      <span
-                        className="synth-dashboard__legend-dot"
-                        style={{ backgroundColor: entry.color }}
-                        aria-hidden="true"
-                      />
-                      <span>{entry.label}</span>
-                      <span className="synth-dashboard__legend-value">
-                        ({entry.percentage.toFixed(1)}%)
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="synth-dashboard__card">
-              <div className="synth-dashboard__card-head">
-                <h2 className="synth-dashboard__card-title">Linha: total de gastos por dia</h2>
-                <button
-                  type="button"
-                  onClick={() => setIsDailyDetailOpen(true)}
-                  className="synth-dashboard__ghost-btn"
-                >
-                  Detalhado
-                </button>
-              </div>
-
-              {dailyLineChart.maxValue === 0 ? (
-                <p className="synth-dashboard__empty-note">Sem dados para montar a linha neste mes.</p>
-              ) : (
-                <>
-                  <svg viewBox="0 0 420 170" className="synth-dashboard__line-svg">
-                    <line x1="18" y1="152" x2="402" y2="152" stroke="rgba(103,242,255,0.35)" />
-                    <polyline
-                      points={linePoints}
-                      fill="none"
-                      stroke="#22d3ee"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <div className="synth-dashboard__axis-caption">
-                    <span>Dia 1</span>
-                    <span>Dia {dailyLineChart.daysInMonth}</span>
+                  <label
+                    htmlFor="dashboard-month"
+                    className="synth-label synth-dashboard__field-label"
+                  >
+                    Selecione o mes
+                  </label>
+                  <input
+                    id="dashboard-month"
+                    type="month"
+                    value={monthControlValue}
+                    onChange={(event) => setMonthControlValue(event.target.value)}
+                    className="synth-control synth-dashboard__month-input"
+                  />
+                  <div className="synth-dashboard__month-actions">
+                    <button
+                      type="button"
+                      onClick={() => setMonthControlValue((prev) => shiftMonthValue(prev, -1))}
+                      className="synth-dashboard__ghost-btn"
+                    >
+                      Mes anterior
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setMonthControlValue((prev) => shiftMonthValue(prev, 1))}
+                      className="synth-dashboard__ghost-btn"
+                    >
+                      Proximo mes
+                    </button>
                   </div>
-                </>
-              )}
-            </div>
+                  <p className="synth-dashboard__hint">
+                    Total no mes: {formatMoney(totalFiltrado)}
+                  </p>
+                </div>
 
-            <div className="synth-dashboard__card">
-              <h2 className="synth-dashboard__card-title">
-                Total por forma de pagamento (mes selecionado)
-              </h2>
+                <div className="synth-dashboard__card">
+                  <h2 className="synth-dashboard__card-title">
+                    Percentual por tipo (mes selecionado)
+                  </h2>
 
-              {paymentTotals.length === 0 ? (
-                <p className="synth-dashboard__empty-note">
-                  Sem gastos para agrupar no mes selecionado.
-                </p>
-              ) : (
-                <ul className="synth-dashboard__payment-list">
-                  {paymentTotals.map((item) => {
-                    const widthPercent =
-                      maxPaymentTotal > 0 ? Math.max((item.total / maxPaymentTotal) * 100, 8) : 8;
+                  <div className="synth-dashboard__type-chart">
+                    <div
+                      className="synth-dashboard__donut"
+                      style={{ background: tipoDistribution.background }}
+                    >
+                      <div className="synth-dashboard__donut-core" />
+                    </div>
 
-                    return (
-                      <li key={item.label} className="synth-dashboard__payment-item">
-                        <div className="synth-dashboard__payment-row">
-                          <span>{item.label}</span>
-                          <strong className="synth-dashboard__payment-total">{formatMoney(item.total)}</strong>
-                        </div>
-                        <div className="synth-dashboard__payment-track">
-                          <div
-                            className="synth-dashboard__payment-fill"
-                            style={{ width: `${widthPercent}%` }}
+                    <div className="synth-dashboard__legend">
+                      {tipoDistribution.entries.length === 0 && (
+                        <p className="synth-dashboard__empty-note">
+                          Sem dados para o mes selecionado.
+                        </p>
+                      )}
+                      {tipoDistribution.entries.map((entry) => (
+                        <div key={entry.label} className="synth-dashboard__legend-item">
+                          <span
+                            className="synth-dashboard__legend-dot"
+                            style={{ backgroundColor: entry.color }}
                             aria-hidden="true"
                           />
+                          <span>{entry.label}</span>
+                          <span className="synth-dashboard__legend-value">
+                            ({entry.percentage.toFixed(1)}%)
+                          </span>
                         </div>
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
-            </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
 
-            <div className="synth-dashboard__card">
-              <h2 className="synth-dashboard__card-title">
-                Gastos dos ultimos 6 meses
-              </h2>
+                <div className="synth-dashboard__card">
+                  <div className="synth-dashboard__card-head">
+                    <h2 className="synth-dashboard__card-title">Linha: total de gastos por dia</h2>
+                    <button
+                      type="button"
+                      onClick={() => setIsDailyDetailOpen(true)}
+                      className="synth-dashboard__ghost-btn"
+                    >
+                      Detalhado
+                    </button>
+                  </div>
 
-              <div className="synth-dashboard__six-month-grid">
-                {sixMonthsChart.points.map((point) => {
-                  const percentage =
-                    sixMonthsChart.maxTotal > 0
-                      ? Math.max((point.total / sixMonthsChart.maxTotal) * 100, 4)
-                      : 4;
-                  const pointId = `${point.year}-${point.month}`;
+                  {dailyLineChart.maxValue === 0 ? (
+                    <p className="synth-dashboard__empty-note">
+                      Sem dados para montar a linha neste mes.
+                    </p>
+                  ) : (
+                    <>
+                      <svg viewBox="0 0 420 170" className="synth-dashboard__line-svg">
+                        <line x1="18" y1="152" x2="402" y2="152" stroke="rgba(103,242,255,0.35)" />
+                        <polyline
+                          points={linePoints}
+                          fill="none"
+                          stroke="#22d3ee"
+                          strokeWidth="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                      <div className="synth-dashboard__axis-caption">
+                        <span>Dia 1</span>
+                        <span>Dia {dailyLineChart.daysInMonth}</span>
+                      </div>
+                    </>
+                  )}
+                </div>
 
-                  return (
-                    <div key={pointId} className="synth-dashboard__month-col">
-                      <div className="synth-dashboard__month-bar-wrap">
-                        <div
-                          role="img"
-                          tabIndex={0}
-                          className="synth-dashboard__month-bar"
-                          style={{ height: `${percentage}%` }}
-                          onClick={() =>
-                            setMonthControlValue(toMonthControlValue(point.year, point.month))
-                          }
-                          onMouseEnter={(event) => {
-                            setHoveredSixMonth({
-                              id: pointId,
-                              label: point.label,
-                              total: point.total,
-                              x: event.clientX,
-                              y: event.clientY,
-                            });
-                          }}
-                          onMouseMove={(event) => {
-                            setHoveredSixMonth((prev) => {
-                              if (!prev || prev.id !== pointId) {
-                                return {
+                <div className="synth-dashboard__card">
+                  <h2 className="synth-dashboard__card-title">
+                    Total por forma de pagamento (mes selecionado)
+                  </h2>
+
+                  {paymentTotals.length === 0 ? (
+                    <p className="synth-dashboard__empty-note">
+                      Sem gastos para agrupar no mes selecionado.
+                    </p>
+                  ) : (
+                    <ul className="synth-dashboard__payment-list">
+                      {paymentTotals.map((item) => {
+                        const widthPercent =
+                          maxPaymentTotal > 0
+                            ? Math.max((item.total / maxPaymentTotal) * 100, 8)
+                            : 8;
+
+                        return (
+                          <li key={item.label} className="synth-dashboard__payment-item">
+                            <div className="synth-dashboard__payment-row">
+                              <span>{item.label}</span>
+                              <strong className="synth-dashboard__payment-total">
+                                {formatMoney(item.total)}
+                              </strong>
+                            </div>
+                            <div className="synth-dashboard__payment-track">
+                              <div
+                                className="synth-dashboard__payment-fill"
+                                style={{ width: `${widthPercent}%` }}
+                                aria-hidden="true"
+                              />
+                            </div>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </div>
+
+                <div className="synth-dashboard__card">
+                  <h2 className="synth-dashboard__card-title">Gastos dos ultimos 6 meses</h2>
+
+                  <div className="synth-dashboard__six-month-grid">
+                    {sixMonthsChart.points.map((point) => {
+                      const percentage =
+                        sixMonthsChart.maxTotal > 0
+                          ? Math.max((point.total / sixMonthsChart.maxTotal) * 100, 4)
+                          : 4;
+                      const pointId = `${point.year}-${point.month}`;
+
+                      return (
+                        <div key={pointId} className="synth-dashboard__month-col">
+                          <div className="synth-dashboard__month-bar-wrap">
+                            <div
+                              role="img"
+                              tabIndex={0}
+                              className="synth-dashboard__month-bar"
+                              style={{ height: `${percentage}%` }}
+                              onClick={() =>
+                                setMonthControlValue(toMonthControlValue(point.year, point.month))
+                              }
+                              onMouseEnter={(event) => {
+                                setHoveredSixMonth({
                                   id: pointId,
                                   label: point.label,
                                   total: point.total,
                                   x: event.clientX,
                                   y: event.clientY,
-                                };
-                              }
+                                });
+                              }}
+                              onMouseMove={(event) => {
+                                setHoveredSixMonth((prev) => {
+                                  if (!prev || prev.id !== pointId) {
+                                    return {
+                                      id: pointId,
+                                      label: point.label,
+                                      total: point.total,
+                                      x: event.clientX,
+                                      y: event.clientY,
+                                    };
+                                  }
 
-                              return {
-                                ...prev,
-                                x: event.clientX,
-                                y: event.clientY,
-                              };
-                            });
-                          }}
-                          onMouseLeave={() => setHoveredSixMonth(null)}
-                          onFocus={(event) => {
-                            const rect = event.currentTarget.getBoundingClientRect();
-                            setHoveredSixMonth({
-                              id: pointId,
-                              label: point.label,
-                              total: point.total,
-                              x: rect.left + rect.width / 2,
-                              y: rect.top,
-                            });
-                          }}
-                          onBlur={() => setHoveredSixMonth(null)}
-                          onKeyDown={(event) => {
-                            if (event.key === 'Enter' || event.key === ' ') {
-                              event.preventDefault();
-                              setMonthControlValue(toMonthControlValue(point.year, point.month));
-                            }
-                          }}
-                          aria-label={`${point.label}: ${formatMoney(point.total)}`}
-                        />
+                                  return {
+                                    ...prev,
+                                    x: event.clientX,
+                                    y: event.clientY,
+                                  };
+                                });
+                              }}
+                              onMouseLeave={() => setHoveredSixMonth(null)}
+                              onFocus={(event) => {
+                                const rect = event.currentTarget.getBoundingClientRect();
+                                setHoveredSixMonth({
+                                  id: pointId,
+                                  label: point.label,
+                                  total: point.total,
+                                  x: rect.left + rect.width / 2,
+                                  y: rect.top,
+                                });
+                              }}
+                              onBlur={() => setHoveredSixMonth(null)}
+                              onKeyDown={(event) => {
+                                if (event.key === 'Enter' || event.key === ' ') {
+                                  event.preventDefault();
+                                  setMonthControlValue(
+                                    toMonthControlValue(point.year, point.month),
+                                  );
+                                }
+                              }}
+                              aria-label={`${point.label}: ${formatMoney(point.total)}`}
+                            />
+                          </div>
+                          <span className="synth-dashboard__month-label">{point.label}</span>
+                        </div>
+                      );
+                    })}
+
+                    {hoveredSixMonth && (
+                      <div
+                        className="synth-dashboard__tooltip"
+                        style={{ left: hoveredSixMonth.x, top: hoveredSixMonth.y - 10 }}
+                      >
+                        {hoveredSixMonth.label}: {formatMoney(hoveredSixMonth.total)}
                       </div>
-                      <span className="synth-dashboard__month-label">{point.label}</span>
-                    </div>
-                  );
-                })}
-
-                {hoveredSixMonth && (
-                  <div
-                    className="synth-dashboard__tooltip"
-                    style={{ left: hoveredSixMonth.x, top: hoveredSixMonth.y - 10 }}
-                  >
-                    {hoveredSixMonth.label}: {formatMoney(hoveredSixMonth.total)}
+                    )}
                   </div>
-                )}
-              </div>
-            </div>
+                </div>
               </div>
             </div>
 
             <div className="synth-dashboard__right">
               <div className="synth-dashboard__results">
                 <div className="synth-dashboard__search-wrap">
-              <input
-                type="text"
-                value={search}
-                onChange={(event) => setSearch(event.target.value)}
-                placeholder="Buscar por descricao, tipo, forma de pagamento ou data"
-                className="synth-control synth-dashboard__search"
-              />
-            </div>
+                  <input
+                    type="text"
+                    value={search}
+                    onChange={(event) => setSearch(event.target.value)}
+                    placeholder="Buscar por descricao, tipo, forma de pagamento ou data"
+                    className="synth-control synth-dashboard__search"
+                  />
+                </div>
 
                 <div className="synth-table-wrap synth-dashboard__table-shell">
                   <table className="synth-table synth-dashboard__table">
                     <thead className="synth-dashboard__thead">
-                  <tr>
-                    <th>Data</th>
-                    <th>Tipo</th>
-                    <th>Pagamento</th>
-                    <th>Descricao</th>
-                    <th>Valor</th>
-                  </tr>
+                      <tr>
+                        <th>Data</th>
+                        <th>Tipo</th>
+                        <th>Pagamento</th>
+                        <th>Descricao</th>
+                        <th>Valor</th>
+                      </tr>
                     </thead>
                     <tbody>
-                  {despesasFiltradas.length === 0 && (
-                    <tr>
-                      <td colSpan={5} className="synth-table__empty">
-                        Nenhum gasto encontrado para o mes selecionado.
-                      </td>
-                    </tr>
-                  )}
+                      {despesasFiltradas.length === 0 && (
+                        <tr>
+                          <td colSpan={5} className="synth-table__empty">
+                            Nenhum gasto encontrado para o mes selecionado.
+                          </td>
+                        </tr>
+                      )}
 
-                  {[...despesasFiltradas]
-                    .sort((a, b) => {
-                      const aTime = new Date(
-                        Number.parseInt(a.ano, 10),
-                        Number.parseInt(a.mes, 10) - 1,
-                        Number.parseInt(a.dia, 10),
-                      ).getTime();
-                      const bTime = new Date(
-                        Number.parseInt(b.ano, 10),
-                        Number.parseInt(b.mes, 10) - 1,
-                        Number.parseInt(b.dia, 10),
-                      ).getTime();
-                      return bTime - aTime;
-                    })
-                    .map((despesa) => (
-                      <tr key={despesa.id}>
-                        <td>
-                          {`${String(despesa.dia).padStart(2, '0')}/${String(despesa.mes).padStart(2, '0')}/${despesa.ano}`}
-                        </td>
-                        <td>{formatarTipo(despesa.tipo)}</td>
-                        <td>
-                          {formatarFormaPagamento(despesa.formaPagamento)}
-                        </td>
-                        <td>{despesa.descricao}</td>
-                        <td>{formatMoney(despesa.valorNumero)}</td>
-                      </tr>
-                    ))}
+                      {[...despesasFiltradas]
+                        .sort((a, b) => {
+                          const aTime = new Date(
+                            Number.parseInt(a.ano, 10),
+                            Number.parseInt(a.mes, 10) - 1,
+                            Number.parseInt(a.dia, 10),
+                          ).getTime();
+                          const bTime = new Date(
+                            Number.parseInt(b.ano, 10),
+                            Number.parseInt(b.mes, 10) - 1,
+                            Number.parseInt(b.dia, 10),
+                          ).getTime();
+                          return bTime - aTime;
+                        })
+                        .map((despesa) => (
+                          <tr key={despesa.id}>
+                            <td>
+                              {`${String(despesa.dia).padStart(2, '0')}/${String(despesa.mes).padStart(2, '0')}/${despesa.ano}`}
+                            </td>
+                            <td>{formatarTipo(despesa.tipo)}</td>
+                            <td>{formatarFormaPagamento(despesa.formaPagamento)}</td>
+                            <td>{despesa.descricao}</td>
+                            <td>{formatMoney(despesa.valorNumero)}</td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>
@@ -791,9 +797,7 @@ export default function Dashboard() {
                   {despesasDiaSelecionado.map((despesa) => (
                     <tr key={`dia-${despesa.id}`}>
                       <td>{formatarTipo(despesa.tipo)}</td>
-                      <td>
-                        {formatarFormaPagamento(despesa.formaPagamento)}
-                      </td>
+                      <td>{formatarFormaPagamento(despesa.formaPagamento)}</td>
                       <td>{despesa.descricao}</td>
                       <td>{formatMoney(despesa.valorNumero)}</td>
                     </tr>

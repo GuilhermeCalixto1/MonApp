@@ -747,7 +747,10 @@ body {
   letter-spacing: 0.05em;
   font-weight: 700;
   text-transform: uppercase;
-  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .synth-dashboard__ghost-btn:hover {
@@ -903,7 +906,9 @@ body {
   border-radius: 0.25rem;
   border: 1px solid rgba(171, 248, 255, 0.25);
   background: linear-gradient(180deg, rgba(132, 254, 255, 0.95), rgba(22, 216, 255, 0.75));
-  transition: filter 0.15s ease, transform 0.15s ease;
+  transition:
+    filter 0.15s ease,
+    transform 0.15s ease;
 }
 
 .synth-dashboard__month-bar:hover,
@@ -1231,7 +1236,7 @@ body {
   .synth-consulta__frame {
     width: min(100%, 1000px);
   }
-  
+
   .synth-consulta__desktop-filter {
     display: none;
   }
