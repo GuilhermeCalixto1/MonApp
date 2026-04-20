@@ -457,7 +457,7 @@ export default function Consulta() {
                     </tr>
                   )}
 
-                  {despesas.map((despesa) => {
+                  {despesas.slice(0, visibleCards).map((despesa) => {
                     const pagamento = obterFormaPagamentoInfo(despesa.formaPagamento);
 
                     return (
@@ -489,6 +489,25 @@ export default function Consulta() {
                 </tbody>
               </table>
             </div>
+
+            {visibleCards < despesas.length && (
+              <div className="synth-consulta__desktop-more-wrap">
+                <button
+                  type="button"
+                  className="synth-button synth-button--secondary synth-consulta__desktop-more"
+                  onClick={() => {
+                    if (isFinalStep) {
+                      setVisibleCards(despesas.length);
+                      return;
+                    }
+
+                    handleVerMais();
+                  }}
+                >
+                  {isFinalStep ? 'Mostrar todos' : 'Ver mais'}
+                </button>
+              </div>
+            )}
 
             <div className="synth-consulta__mobile-list">
               {despesas.length === 0 ? (

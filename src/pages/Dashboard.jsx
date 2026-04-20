@@ -83,6 +83,7 @@ export default function Dashboard() {
   const [search, setSearch] = useState('');
   const [monthControlValue, setMonthControlValue] = useState(startMonthValue);
   const [hoveredSixMonth, setHoveredSixMonth] = useState(null);
+  const [hoveredNextSixMonth, setHoveredNextSixMonth] = useState(null);
   const [isDailyDetailOpen, setIsDailyDetailOpen] = useState(false);
   const [hoveredDailyPoint, setHoveredDailyPoint] = useState(null);
   const [selectedDailyPoint, setSelectedDailyPoint] = useState(null);
@@ -208,6 +209,41 @@ export default function Dashboard() {
 
     for (let offset = 6; offset >= 1; offset -= 1) {
       const reference = new Date(currentYear, currentMonth - 1 - offset, 1);
+      labels.push({
+        year: String(reference.getFullYear()),
+        month: String(reference.getMonth() + 1),
+        label: `${MESES_LABEL[reference.getMonth()]}/${String(reference.getFullYear()).slice(-2)}`,
+      });
+    }
+
+    const points = labels.map((item) => {
+      const total = despesas.reduce((sum, despesa) => {
+        if (despesa.ano === item.year && String(Number(despesa.mes)) === item.month) {
+          return sum + toMoneyNumber(despesa.valor);
+        }
+        return sum;
+      }, 0);
+
+      return {
+        ...item,
+        total,
+      };
+    });
+
+    return {
+      points,
+      maxTotal: Math.max(...points.map((point) => point.total), 0),
+    };
+  }, [despesas]);
+
+  const nextSixMonthsChart = useMemo(() => {
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth() + 1;
+    const labels = [];
+
+    for (let offset = 1; offset <= 6; offset += 1) {
+      const reference = new Date(currentYear, currentMonth - 1 + offset, 1);
       labels.push({
         year: String(reference.getFullYear()),
         month: String(reference.getMonth() + 1),
@@ -465,43 +501,19 @@ export default function Dashboard() {
                               onClick={() =>
                                 setMonthControlValue(toMonthControlValue(point.year, point.month))
                               }
-                              onMouseEnter={(event) => {
+                              onMouseEnter={() => {
                                 setHoveredSixMonth({
                                   id: pointId,
                                   label: point.label,
                                   total: point.total,
-                                  x: event.clientX,
-                                  y: event.clientY,
-                                });
-                              }}
-                              onMouseMove={(event) => {
-                                setHoveredSixMonth((prev) => {
-                                  if (!prev || prev.id !== pointId) {
-                                    return {
-                                      id: pointId,
-                                      label: point.label,
-                                      total: point.total,
-                                      x: event.clientX,
-                                      y: event.clientY,
-                                    };
-                                  }
-
-                                  return {
-                                    ...prev,
-                                    x: event.clientX,
-                                    y: event.clientY,
-                                  };
                                 });
                               }}
                               onMouseLeave={() => setHoveredSixMonth(null)}
-                              onFocus={(event) => {
-                                const rect = event.currentTarget.getBoundingClientRect();
+                              onFocus={() => {
                                 setHoveredSixMonth({
                                   id: pointId,
                                   label: point.label,
                                   total: point.total,
-                                  x: rect.left + rect.width / 2,
-                                  y: rect.top,
                                 });
                               }}
                               onBlur={() => setHoveredSixMonth(null)}
@@ -513,22 +525,95 @@ export default function Dashboard() {
                                   );
                                 }
                               }}
-                              aria-label={`${point.label}: ${formatMoney(point.total)}`}
+                              aria-label={`Total gasto em ${point.label}: ${formatMoney(point.total)}`}
                             />
+                            {hoveredSixMonth?.id === pointId && (
+                              <div className="synth-dashboard__tooltip-six-month-inline">
+                                <span className="synth-dashboard__tooltip-label">
+                                  Total gasto
+                                </span>
+                                <strong className="synth-dashboard__tooltip-value">
+                                  {formatMoney(point.total)}
+                                </strong>
+                                <span className="synth-dashboard__tooltip-month">
+                                  {point.label}
+                                </span>
+                              </div>
+                            )}
                           </div>
                           <span className="synth-dashboard__month-label">{point.label}</span>
                         </div>
                       );
                     })}
+                  </div>
+                </div>
 
-                    {hoveredSixMonth && (
-                      <div
-                        className="synth-dashboard__tooltip"
-                        style={{ left: hoveredSixMonth.x, top: hoveredSixMonth.y - 10 }}
-                      >
-                        {hoveredSixMonth.label}: {formatMoney(hoveredSixMonth.total)}
-                      </div>
-                    )}
+                <div className="synth-dashboard__card">
+                  <h2 className="synth-dashboard__card-title">Previsão: próximos 6 meses</h2>
+
+                  <div className="synth-dashboard__six-month-grid">
+                    {nextSixMonthsChart.points.map((point) => {
+                      const percentage =
+                        nextSixMonthsChart.maxTotal > 0
+                          ? Math.max((point.total / nextSixMonthsChart.maxTotal) * 100, 4)
+                          : 4;
+                      const pointId = `next-${point.year}-${point.month}`;
+
+                      return (
+                        <div key={pointId} className="synth-dashboard__month-col">
+                          <div className="synth-dashboard__month-bar-wrap">
+                            <div
+                              role="img"
+                              tabIndex={0}
+                              className="synth-dashboard__month-bar"
+                              style={{ height: `${percentage}%` }}
+                              onClick={() =>
+                                setMonthControlValue(toMonthControlValue(point.year, point.month))
+                              }
+                              onMouseEnter={() => {
+                                setHoveredNextSixMonth({
+                                  id: pointId,
+                                  label: point.label,
+                                  total: point.total,
+                                });
+                              }}
+                              onMouseLeave={() => setHoveredNextSixMonth(null)}
+                              onFocus={() => {
+                                setHoveredNextSixMonth({
+                                  id: pointId,
+                                  label: point.label,
+                                  total: point.total,
+                                });
+                              }}
+                              onBlur={() => setHoveredNextSixMonth(null)}
+                              onKeyDown={(event) => {
+                                if (event.key === 'Enter' || event.key === ' ') {
+                                  event.preventDefault();
+                                  setMonthControlValue(
+                                    toMonthControlValue(point.year, point.month),
+                                  );
+                                }
+                              }}
+                              aria-label={`Total gasto em ${point.label}: ${formatMoney(point.total)}`}
+                            />
+                            {hoveredNextSixMonth?.id === pointId && (
+                              <div className="synth-dashboard__tooltip-six-month-inline">
+                                <span className="synth-dashboard__tooltip-label">
+                                  Total gasto
+                                </span>
+                                <strong className="synth-dashboard__tooltip-value">
+                                  {formatMoney(point.total)}
+                                </strong>
+                                <span className="synth-dashboard__tooltip-month">
+                                  {point.label}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                          <span className="synth-dashboard__month-label">{point.label}</span>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
