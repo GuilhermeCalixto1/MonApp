@@ -38,6 +38,16 @@ export default function Navbar({ onLogout }) {
               className={({ isActive }) =>
                 `nav-link synth-navbar__link${isActive ? ' active' : ''}`
               }
+              to="/contas"
+            >
+              Contas
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink
+              className={({ isActive }) =>
+                `nav-link synth-navbar__link${isActive ? ' active' : ''}`
+              }
               to="/dashboard"
             >
               Dashboard

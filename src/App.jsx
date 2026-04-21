@@ -5,6 +5,7 @@ import Inicio from './pages/Inicio';
 import Cadastro from './pages/Cadastro';
 import Consulta from './pages/Consulta';
 import Dashboard from './pages/Dashboard';
+import TotalContas from './pages/TotalContas';
 import Login from './pages/Login';
 import { ensureDefaultUser, isAuthenticated, logout } from './services/auth';
 
@@ -43,6 +44,8 @@ export default function App() {
         <Route path="/" element={requireAuth(<Inicio />)} />
         <Route path="/cadastro" element={requireAuth(<Cadastro />)} />
         <Route path="/consulta" element={requireAuth(<Consulta />)} />
+        <Route path="/contas" element={requireAuth(<TotalContas />)} />
+        <Route path="/total" element={requireAuth(<TotalContas />)} />
         <Route path="/dashboard" element={requireAuth(<Dashboard />)} />
         <Route path="*" element={<Navigate to={authenticated ? '/' : '/login'} replace />} />
       </Routes>

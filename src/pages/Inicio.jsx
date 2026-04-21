@@ -12,8 +12,8 @@ export default function Inicio() {
           <header className="synth-hero">
             <h1 className="synth-title">Bem-vindo ao MonApp</h1>
             <p className="synth-hero__subtitle">
-              Escolha para onde deseja ir: cadastrar novas despesas ou consultar registros
-              existentes.
+              Escolha para onde deseja ir: cadastrar despesas, consultar registros ou abrir suas
+              contas bancárias.
             </p>
           </header>
 
@@ -38,6 +38,13 @@ export default function Inicio() {
                 className="synth-button synth-button--utility synth-home__action-link"
               >
                 Abrir Dashboard
+              </Link>
+
+              <Link
+                to="/contas"
+                className="synth-button synth-button--danger-soft synth-home__action-link"
+              >
+                Ver Contas
               </Link>
             </div>
           </div>

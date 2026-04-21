@@ -3,15 +3,18 @@ import {
   createDespesa,
   formatarTipo,
   gerarDespesasFicticias,
+  initBankAccountsStorage,
   initStorage,
   limparDespesas,
   obterFormaPagamentoInfo,
   pesquisarDespesas,
+  recuperarContasBancarias,
   recuperarTodasDespesas,
   removerDespesa,
 } from '../services/storage';
 
 initStorage();
+initBankAccountsStorage();
 
 const initialFiltro = {
   ano: '',
@@ -19,13 +22,27 @@ const initialFiltro = {
   dia: '',
   tipo: '',
   formaPagamento: '',
+  contaBancaria: '',
+  tipoMovimento: '',
   descricao: '',
   valor: '',
 };
 
+const FORMAS_SAIDA = [
+  { value: 'debito', label: 'Débito' },
+  { value: 'credito', label: 'Crédito' },
+  { value: 'pix', label: 'Pix' },
+  { value: 'dinheiro', label: 'Dinheiro' },
+  { value: 'alelo', label: 'Alelo' },
+  { value: 'retirada', label: 'Retirada' },
+];
+
+const FORMAS_ENTRADA = [{ value: 'deposito', label: 'Depósito' }];
+
 function FormaPagamentoIcon({ formaPagamento }) {
   switch (formaPagamento) {
     case '1':
+    case 'debito':
       return (
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <rect x="4" y="6" width="16" height="12" rx="2.5" fill="currentColor" opacity="0.16" />
@@ -64,6 +81,7 @@ function FormaPagamentoIcon({ formaPagamento }) {
         </svg>
       );
     case '2':
+    case 'credito':
       return (
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <rect x="4" y="6" width="16" height="12" rx="2.5" fill="currentColor" opacity="0.16" />
@@ -102,6 +120,7 @@ function FormaPagamentoIcon({ formaPagamento }) {
         </svg>
       );
     case '3':
+    case 'pix':
       return (
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <circle cx="12" cy="12" r="9" fill="currentColor" opacity="0.16" />
@@ -109,6 +128,7 @@ function FormaPagamentoIcon({ formaPagamento }) {
         </svg>
       );
     case '4':
+    case 'dinheiro':
       return (
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <rect
@@ -148,6 +168,7 @@ function FormaPagamentoIcon({ formaPagamento }) {
         </svg>
       );
     case '5':
+    case 'alelo':
       return (
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <rect
@@ -183,6 +204,32 @@ function FormaPagamentoIcon({ formaPagamento }) {
           />
         </svg>
       );
+    case 'retirada':
+      return (
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="9" fill="currentColor" opacity="0.16" />
+          <path
+            d="M7 12h10"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+        </svg>
+      );
+    case 'deposito':
+      return (
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="9" fill="currentColor" opacity="0.16" />
+          <path
+            d="M12 7v10M7 12h10"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+        </svg>
+      );
     default:
       return (
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -196,6 +243,7 @@ export default function Consulta() {
   const [filtro, setFiltro] = useState(initialFiltro);
   const [despesas, setDespesas] = useState(() => recuperarTodasDespesas());
   const [visibleCards, setVisibleCards] = useState(6);
+  const [contas] = useState(() => recuperarContasBancarias());
 
   const anos = useMemo(() => {
     const atual = new Date().getFullYear();
@@ -208,10 +256,31 @@ export default function Consulta() {
   };
 
   const handlePesquisar = () => {
-    const filtroNormalizado = createDespesa(filtro);
+    const filtroNormalizado = {
+      ...createDespesa(filtro),
+      tipoMovimento: String(filtro.tipoMovimento ?? '').trim(),
+    };
     setDespesas(pesquisarDespesas(filtroNormalizado));
     setVisibleCards(6);
   };
+
+  const contaPorId = useMemo(() => {
+    return contas.reduce((acc, conta) => {
+      acc[conta.id] = conta.nome;
+      return acc;
+    }, {});
+  }, [contas]);
+
+  const getContaNome = (contaId) => contaPorId[contaId] ?? 'Sem conta';
+
+  const getTipoMovimentoLabel = (tipoMovimento) =>
+    tipoMovimento === 'entrada' ? 'Entrada' : 'Saida';
+
+  const formasMovimento = useMemo(() => {
+    if (filtro.tipoMovimento === 'entrada') return FORMAS_ENTRADA;
+    if (filtro.tipoMovimento === 'saida') return FORMAS_SAIDA;
+    return [...FORMAS_ENTRADA, ...FORMAS_SAIDA];
+  }, [filtro.tipoMovimento]);
 
   const handleLimpar = () => {
     setFiltro(initialFiltro);
@@ -350,7 +419,7 @@ export default function Consulta() {
 
               <div className="synth-field synth-consulta__desktop-filter">
                 <label className="synth-label" htmlFor="formaPagamento">
-                  Forma de pagamento
+                  Forma de saída
                 </label>
                 <select
                   id="formaPagamento"
@@ -360,11 +429,48 @@ export default function Consulta() {
                   onChange={onChange}
                 >
                   <option value="">Todos</option>
-                  <option value="1">Debito</option>
-                  <option value="2">Credito</option>
-                  <option value="3">Pix</option>
-                  <option value="4">Dinheiro</option>
-                  <option value="5">Alelo</option>
+                  {formasMovimento.map((forma) => (
+                    <option key={forma.value} value={forma.value}>
+                      {forma.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="synth-field synth-consulta__desktop-filter">
+                <label className="synth-label" htmlFor="contaBancaria">
+                  Conta bancária
+                </label>
+                <select
+                  id="contaBancaria"
+                  className="synth-control synth-control--select"
+                  name="contaBancaria"
+                  value={filtro.contaBancaria}
+                  onChange={onChange}
+                >
+                  <option value="">Todas</option>
+                  {contas.map((conta) => (
+                    <option key={conta.id} value={conta.id}>
+                      {conta.nome}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="synth-field synth-consulta__desktop-filter">
+                <label className="synth-label" htmlFor="tipoMovimento">
+                  Movimento
+                </label>
+                <select
+                  id="tipoMovimento"
+                  className="synth-control synth-control--select"
+                  name="tipoMovimento"
+                  value={filtro.tipoMovimento}
+                  onChange={onChange}
+                >
+                  <option value="">Todos</option>
+                  <option value="entrada">Entrada</option>
+                  <option value="saida">Saída</option>
                 </select>
               </div>
 
@@ -440,8 +546,10 @@ export default function Consulta() {
                 <thead>
                   <tr>
                     <th>Data</th>
+                    <th>Conta</th>
+                    <th>Movimento</th>
                     <th>Tipo</th>
-                    <th>Forma de pagamento</th>
+                    <th>Forma de saída</th>
                     <th>Descricao</th>
                     <th>Valor</th>
                     <th className="synth-table__actions" />
@@ -451,7 +559,7 @@ export default function Consulta() {
                 <tbody>
                   {despesas.length === 0 && (
                     <tr>
-                      <td className="synth-table__empty" colSpan={6}>
+                      <td className="synth-table__empty" colSpan={8}>
                         Nenhuma despesa encontrada para os filtros informados.
                       </td>
                     </tr>
@@ -463,6 +571,10 @@ export default function Consulta() {
                     return (
                       <tr key={despesa.id}>
                         <td data-label="Data">{`${despesa.dia}/${despesa.mes}/${despesa.ano}`}</td>
+                        <td data-label="Conta">{getContaNome(despesa.contaBancaria)}</td>
+                        <td data-label="Movimento">
+                          {getTipoMovimentoLabel(despesa.tipoMovimento)}
+                        </td>
                         <td data-label="Tipo">{formatarTipo(despesa.tipo)}</td>
                         <td data-label="Pagamento">
                           <span className={`synth-payment-badge ${pagamento.className}`}>
@@ -534,6 +646,16 @@ export default function Consulta() {
                             >
                               Excluir
                             </button>
+                          </div>
+
+                          <div className="synth-consulta__mobile-meta">
+                            <span className="synth-consulta__mobile-label">Conta</span>
+                            <strong>{getContaNome(despesa.contaBancaria)}</strong>
+                          </div>
+
+                          <div className="synth-consulta__mobile-meta">
+                            <span className="synth-consulta__mobile-label">Movimento</span>
+                            <strong>{getTipoMovimentoLabel(despesa.tipoMovimento)}</strong>
                           </div>
 
                           <div className="synth-consulta__mobile-meta">

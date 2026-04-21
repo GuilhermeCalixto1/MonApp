@@ -1,6 +1,15 @@
 import { useMemo, useState } from 'react';
 import Modal from '../components/Modal';
-import { createDespesa, gravarDespesa, initStorage, validarDespesa } from '../services/storage';
+import {
+  createDespesa,
+  gravarDespesa,
+  initBankAccountsStorage,
+  initStorage,
+  recuperarContasBancarias,
+  registrarRecebivel,
+  registrarSaida,
+  validarDespesa,
+} from '../services/storage';
 
 initStorage();
 
@@ -9,13 +18,30 @@ const initialForm = {
   mes: '',
   dia: '',
   tipo: '',
-  formaPagamento: '',
+  formaPagamento: 'debito',
+  contaBancaria: '',
+  tipoMovimento: 'saida',
   descricao: '',
   valor: '',
 };
 
+const FORMAS_SAIDA = [
+  { value: 'debito', label: 'Débito' },
+  { value: 'credito', label: 'Crédito' },
+  { value: 'pix', label: 'Pix' },
+  { value: 'dinheiro', label: 'Dinheiro' },
+  { value: 'alelo', label: 'Alelo' },
+  { value: 'retirada', label: 'Retirada' },
+];
+
+const FORMAS_ENTRADA = [{ value: 'deposito', label: 'Depósito' }];
+
 export default function Cadastro() {
   const [form, setForm] = useState(initialForm);
+  const [contas] = useState(() => {
+    initBankAccountsStorage();
+    return recuperarContasBancarias();
+  });
   const [modal, setModal] = useState({
     show: false,
     success: false,
@@ -31,14 +57,47 @@ export default function Cadastro() {
 
   const onChange = (event) => {
     const { name, value } = event.target;
+
+    if (name === 'tipoMovimento') {
+      setForm((prev) => ({
+        ...prev,
+        tipoMovimento: value,
+        formaPagamento: value === 'entrada' ? 'deposito' : 'debito',
+      }));
+      return;
+    }
+
     setForm((prev) => ({ ...prev, [name]: value }));
   };
+
+  const formasMovimento = form.tipoMovimento === 'entrada' ? FORMAS_ENTRADA : FORMAS_SAIDA;
+  const formaLabel = form.tipoMovimento === 'entrada' ? 'Forma de entrada' : 'Forma de saída';
 
   const handleCadastrar = () => {
     const despesa = createDespesa(form);
 
     if (validarDespesa(despesa)) {
-      gravarDespesa(despesa);
+      const novoId = gravarDespesa(despesa);
+
+      if (form.tipoMovimento === 'entrada') {
+        registrarRecebivel(form.contaBancaria, {
+          id: String(novoId),
+          descricao: form.descricao,
+          valor: form.valor,
+          data: `${form.ano}-${String(form.mes).padStart(2, '0')}-${String(form.dia).padStart(2, '0')}`,
+        });
+      } else {
+        registrarSaida(form.contaBancaria, {
+          id: String(novoId),
+          descricao: form.descricao,
+          valor: form.valor,
+          data: `${form.ano}-${String(form.mes).padStart(2, '0')}-${String(form.dia).padStart(2, '0')}`,
+          categoria: form.tipo,
+          formaPagamento: form.formaPagamento,
+          parcelas: '1',
+        });
+      }
+
       setForm(initialForm);
       setModal({
         show: true,
@@ -98,8 +157,24 @@ export default function Cadastro() {
               </div>
 
               <div className="synth-field synth-field--wide">
+                <label className="synth-label" htmlFor="tipoMovimento">
+                  Movimento
+                </label>
+                <select
+                  id="tipoMovimento"
+                  className="synth-control synth-control--select"
+                  name="tipoMovimento"
+                  value={form.tipoMovimento}
+                  onChange={onChange}
+                >
+                  <option value="saida">Saída</option>
+                  <option value="entrada">Entrada</option>
+                </select>
+              </div>
+
+              <div className="synth-field synth-field--wide">
                 <label className="synth-label" htmlFor="formaPagamento">
-                  Forma de pagamento
+                  {formaLabel}
                 </label>
                 <select
                   id="formaPagamento"
@@ -108,12 +183,31 @@ export default function Cadastro() {
                   value={form.formaPagamento}
                   onChange={onChange}
                 >
-                  <option value="">Selecionar forma de pagamento</option>
-                  <option value="1">Débito</option>
-                  <option value="2">Crédito</option>
-                  <option value="3">Pix</option>
-                  <option value="4">Dinheiro</option>
-                  <option value="5">Alelo</option>
+                  {formasMovimento.map((forma) => (
+                    <option key={forma.value} value={forma.value}>
+                      {forma.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="synth-field synth-field--wide">
+                <label className="synth-label" htmlFor="contaBancaria">
+                  Seleção de Conta
+                </label>
+                <select
+                  id="contaBancaria"
+                  className="synth-control synth-control--select"
+                  name="contaBancaria"
+                  value={form.contaBancaria}
+                  onChange={onChange}
+                >
+                  <option value="">Selecionar conta bancária</option>
+                  {contas.map((conta) => (
+                    <option key={conta.id} value={conta.id}>
+                      {conta.nome}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -194,6 +288,7 @@ export default function Cadastro() {
                   type="button"
                   className="synth-button synth-button--primary"
                   onClick={handleCadastrar}
+                  disabled={contas.length === 0}
                 >
                   Salvar despesa
                 </button>
@@ -206,6 +301,12 @@ export default function Cadastro() {
                   Cancelar
                 </button>
               </div>
+
+              {contas.length === 0 ? (
+                <p className="synth-login__hint synth-total__form-note">
+                  Cadastre uma conta na página de Contas antes de registrar transações.
+                </p>
+              ) : null}
             </div>
           </div>
         </div>
