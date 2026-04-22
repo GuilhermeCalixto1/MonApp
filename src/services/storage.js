@@ -539,7 +539,7 @@ export function gerarDespesasFicticias(quantidade = 24) {
 
   const anos = [String(new Date().getFullYear() - 1), String(new Date().getFullYear())];
   const tipos = Object.keys(TIPOS_DESPESA);
-  const formasSaida = ['debito', 'credito', 'pix', 'dinheiro', 'alelo', 'retirada'];
+  const formasSaida = ['debito', 'credito', 'pix', 'alelo', 'retirada'];
   const contas = recuperarContasBancarias();
 
   if (contas.length === 0) {

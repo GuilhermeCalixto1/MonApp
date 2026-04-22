@@ -23,7 +23,7 @@ const initialFiltro = {
   tipo: '',
   formaPagamento: '',
   contaBancaria: '',
-  tipoMovimento: '',
+  tipoMovimento: 'saida',
   descricao: '',
   valor: '',
 };
@@ -32,7 +32,6 @@ const FORMAS_SAIDA = [
   { value: 'debito', label: 'Débito' },
   { value: 'credito', label: 'Crédito' },
   { value: 'pix', label: 'Pix' },
-  { value: 'dinheiro', label: 'Dinheiro' },
   { value: 'alelo', label: 'Alelo' },
   { value: 'retirada', label: 'Retirada' },
 ];
@@ -244,6 +243,8 @@ export default function Consulta() {
   const [despesas, setDespesas] = useState(() => recuperarTodasDespesas());
   const [visibleCards, setVisibleCards] = useState(6);
   const [contas] = useState(() => recuperarContasBancarias());
+  const formaPagamentoLabel =
+    filtro.tipoMovimento === 'entrada' ? 'Forma de entrada' : 'Forma de saída';
 
   const anos = useMemo(() => {
     const atual = new Date().getFullYear();
@@ -419,7 +420,7 @@ export default function Consulta() {
 
               <div className="synth-field synth-consulta__desktop-filter">
                 <label className="synth-label" htmlFor="formaPagamento">
-                  Forma de saída
+                  {formaPagamentoLabel}
                 </label>
                 <select
                   id="formaPagamento"
@@ -468,7 +469,6 @@ export default function Consulta() {
                   value={filtro.tipoMovimento}
                   onChange={onChange}
                 >
-                  <option value="">Todos</option>
                   <option value="entrada">Entrada</option>
                   <option value="saida">Saída</option>
                 </select>

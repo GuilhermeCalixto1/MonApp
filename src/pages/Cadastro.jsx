@@ -19,6 +19,7 @@ const initialForm = {
   dia: '',
   tipo: '',
   formaPagamento: 'debito',
+  parcelas: '1',
   contaBancaria: '',
   tipoMovimento: 'saida',
   descricao: '',
@@ -29,7 +30,6 @@ const FORMAS_SAIDA = [
   { value: 'debito', label: 'Débito' },
   { value: 'credito', label: 'Crédito' },
   { value: 'pix', label: 'Pix' },
-  { value: 'dinheiro', label: 'Dinheiro' },
   { value: 'alelo', label: 'Alelo' },
   { value: 'retirada', label: 'Retirada' },
 ];
@@ -63,6 +63,16 @@ export default function Cadastro() {
         ...prev,
         tipoMovimento: value,
         formaPagamento: value === 'entrada' ? 'deposito' : 'debito',
+        parcelas: '1',
+      }));
+      return;
+    }
+
+    if (name === 'formaPagamento') {
+      setForm((prev) => ({
+        ...prev,
+        formaPagamento: value,
+        parcelas: value === 'credito' ? prev.parcelas : '1',
       }));
       return;
     }
@@ -94,7 +104,7 @@ export default function Cadastro() {
           data: `${form.ano}-${String(form.mes).padStart(2, '0')}-${String(form.dia).padStart(2, '0')}`,
           categoria: form.tipo,
           formaPagamento: form.formaPagamento,
-          parcelas: '1',
+          parcelas: form.formaPagamento === 'credito' ? form.parcelas : '1',
         });
       }
 
@@ -190,6 +200,27 @@ export default function Cadastro() {
                   ))}
                 </select>
               </div>
+
+              {form.tipoMovimento === 'saida' && form.formaPagamento === 'credito' ? (
+                <div className="synth-field synth-field--wide">
+                  <label className="synth-label" htmlFor="parcelas">
+                    Parcelamento
+                  </label>
+                  <select
+                    id="parcelas"
+                    className="synth-control synth-control--select"
+                    name="parcelas"
+                    value={form.parcelas}
+                    onChange={onChange}
+                  >
+                    {Array.from({ length: 12 }, (_, index) => String(index + 1)).map((parcela) => (
+                      <option key={parcela} value={parcela}>
+                        {`${parcela}x`}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : null}
 
               <div className="synth-field synth-field--wide">
                 <label className="synth-label" htmlFor="contaBancaria">
