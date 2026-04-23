@@ -139,6 +139,7 @@ export default function TotalContas() {
     initBankAccountsStorage();
     return recuperarContasBancarias();
   });
+  const [accountError, setAccountError] = useState('');
   const [accountForm, setAccountForm] = useState(createEmptyAccountForm());
   const [receivableForm, setReceivableForm] = useState(createEmptyReceivableForm());
   const [outflowForm, setOutflowForm] = useState(createEmptyOutflowForm());
@@ -212,18 +213,24 @@ export default function TotalContas() {
 
   const openAccountModal = () => {
     setAccountForm(createEmptyAccountForm());
+    setAccountError('');
     setAccountModalOpen(true);
   };
 
   const handleCreateAccount = () => {
-    if (!accountForm.nome.trim() || !accountForm.saldoAtual.trim()) return;
+    if (!accountForm.nome.trim() || !accountForm.saldoAtual.trim()) {
+      setAccountError('Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
 
     criarContaBancaria({
       nome: accountForm.nome,
       saldoAtual: accountForm.saldoAtual,
     });
+
     refreshAccounts();
     setAccountForm(createEmptyAccountForm());
+    setAccountError('');
     setAccountModalOpen(false);
   };
 
@@ -269,9 +276,11 @@ export default function TotalContas() {
   const handleUpdateBalance = () => {
     if (!balanceForm.contaId || !balanceForm.saldoAtual.trim()) return;
 
-    atualizarContaBancaria(balanceForm.contaId, {
+    atualizarContaBancaria(balanceForm.contaId, (conta) => ({
+      ...conta,
       saldoAtual: balanceForm.saldoAtual,
-    });
+    }));
+
     refreshAccounts();
     setBalanceForm(createEmptyBalanceForm());
     setBalanceModalOpen(false);
@@ -541,15 +550,34 @@ export default function TotalContas() {
         }
       >
         <div className="synth-total__modal-grid">
+          {accountError && (
+            <div
+              style={{
+                gridColumn: '1 / -1',
+                color: '#ff4b4b',
+                backgroundColor: 'rgba(255, 75, 75, 0.1)',
+                padding: '10px',
+                borderRadius: '4px',
+                fontSize: '0.85rem',
+                border: '1px solid #ff4b4b',
+                marginBottom: '10px',
+                fontWeight: 'bold',
+              }}
+            >
+              ⚠️ {accountError}
+            </div>
+          )}
           <label className="synth-field">
             <span className="synth-label">Nome da conta</span>
             <input
               type="text"
               className="synth-control"
+              style={accountError && !accountForm.nome.trim() ? { borderColor: '#ff4b4b' } : {}}
               value={accountForm.nome}
-              onChange={(event) =>
-                setAccountForm((prev) => ({ ...prev, nome: event.target.value }))
-              }
+              onChange={(event) => {
+                setAccountForm((prev) => ({ ...prev, nome: event.target.value }));
+                if (accountError) setAccountError('');
+              }}
               placeholder="Ex: Nubank"
             />
           </label>
@@ -558,10 +586,14 @@ export default function TotalContas() {
             <input
               type="text"
               className="synth-control"
-              value={accountForm.saldoAtual}
-              onChange={(event) =>
-                setAccountForm((prev) => ({ ...prev, saldoAtual: event.target.value }))
+              style={
+                accountError && !accountForm.saldoAtual.trim() ? { borderColor: '#ff4b4b' } : {}
               }
+              value={accountForm.saldoAtual}
+              onChange={(event) => {
+                setAccountForm((prev) => ({ ...prev, saldoAtual: event.target.value }));
+                if (accountError) setAccountError('');
+              }}
               placeholder="Ex: 1500,00"
             />
           </label>
