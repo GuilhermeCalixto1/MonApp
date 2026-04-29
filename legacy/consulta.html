@@ -13,8 +13,8 @@
 
     <!-- Font Awesome -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-
-    <script src="script/app.js" defer></script>
+    
+    <script src="script/app.js"  defer></script>
 
 	</head>
 
@@ -24,7 +24,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
       <div class="container">
         <a class="navbar-brand" href="#">
-           <img src="logo.png" width="50" height="35" alt="Orçamento pessoal">
+            <img src="../src/images/logo.png" width="50" height="35" alt="Orçamento pessoal">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -32,10 +32,10 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="index.html">Cadastro</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
               <a class="nav-link" href="consulta.html">Consulta</a>
             </li>
           </ul>
@@ -45,9 +45,9 @@
     </nav>
 
     <div class="container">
-      <div class="row">
-        <div class="col mb-5">
-          <h1 class="display-4">Registro de nova despesa</h1>
+      <div class="row mb-5">
+        <div class="col">
+          <h1 class="display-4">Consulta de despesas</h1>
         </div>
       </div>
 
@@ -55,8 +55,7 @@
         <div class="col-md-2">
           <select class="form-control" id="ano">
             <option value="">Ano</option>
-            <option value="2025">2025</option>
-            <option value="2026">2026</option>
+            <option value="2018">2018</option>
           </select>
         </div>
 
@@ -94,7 +93,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row  mb-5">
         <div class="col-md-8">
           <input type="text" class="form-control" placeholder="Descrição" id="descricao" />
         </div>
@@ -104,34 +103,34 @@
         </div>
 
         <div class="col-md-2 d-flex justify-content-end">
-          <button type="button" class="btn btn-primary" id="btnCadastro">
-            <i class="fas fa-plus"></i>
+          <button type="button" class="btn btn-primary" id='btnPesquisar'>
+            <i class="fas fa-search"></i>
           </button>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col">
+          <table class="table" >
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Tipo</th>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th></th>
+              </tr>
+            </thead>
+
+            <tbody id="tabela">
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-
-    <!-- Button trigger modal -->
-
-<!-- Modal -->
-<div class="modal fade" id="modalGravacao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Erro na gravação</h1>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div id='modalCampo' class="modal-body">
-        
-      </div>
-      <div class="modal-footer">
-        <button id="botaoModal" type="button" class="btn" data-dismiss="modal"></button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
+    
   </body>	
   
+  
+
 </html>
