@@ -1,0 +1,21 @@
+services:
+  mongo_db:
+    image: mongo:latest
+    container_name: monapp_db
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: ./backend
+    container_name: monapp_backend
+    ports:
+      - '5000:5000'
+    environment:
+      - MONGODB_URI=mongodb://mongo_db:27017/monapp
+    depends_on:
+      - mongo_db
+
+volumes:
+  mongo_data:
