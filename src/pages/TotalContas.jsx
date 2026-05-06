@@ -3,6 +3,7 @@ import {
   criarContaBancaria,
   initBankAccountsStorage,
   recuperarContasBancarias,
+  atualizarContaBancaria,
   registrarRecebivel,
   registrarSaida,
   removerContaBancaria,
@@ -101,6 +102,10 @@ function createEmptyOutflowForm(contaId = '') {
   };
 }
 
+function createEmptyBalanceForm(contaId = '', saldoAtual = '') {
+  return { contaId, saldoAtual };
+}
+
 function Modal({ open, title, subtitle, onClose, children, footer }) {
   if (!open) return null;
 
@@ -134,12 +139,15 @@ export default function TotalContas() {
     initBankAccountsStorage();
     return recuperarContasBancarias();
   });
+  const [accountError, setAccountError] = useState('');
   const [accountForm, setAccountForm] = useState(createEmptyAccountForm());
   const [receivableForm, setReceivableForm] = useState(createEmptyReceivableForm());
   const [outflowForm, setOutflowForm] = useState(createEmptyOutflowForm());
+  const [balanceForm, setBalanceForm] = useState(createEmptyBalanceForm());
   const [accountModalOpen, setAccountModalOpen] = useState(false);
   const [receivableModalOpen, setReceivableModalOpen] = useState(false);
   const [outflowModalOpen, setOutflowModalOpen] = useState(false);
+  const [balanceModalOpen, setBalanceModalOpen] = useState(false);
 
   const todayIso = useMemo(() => {
     const now = new Date();
@@ -205,18 +213,24 @@ export default function TotalContas() {
 
   const openAccountModal = () => {
     setAccountForm(createEmptyAccountForm());
+    setAccountError('');
     setAccountModalOpen(true);
   };
 
   const handleCreateAccount = () => {
-    if (!accountForm.nome.trim() || !accountForm.saldoAtual.trim()) return;
+    if (!accountForm.nome.trim() || !accountForm.saldoAtual.trim()) {
+      setAccountError('Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
 
     criarContaBancaria({
       nome: accountForm.nome,
       saldoAtual: accountForm.saldoAtual,
     });
+
     refreshAccounts();
     setAccountForm(createEmptyAccountForm());
+    setAccountError('');
     setAccountModalOpen(false);
   };
 
@@ -252,6 +266,24 @@ export default function TotalContas() {
   const openOutflowModal = (contaId) => {
     setOutflowForm(createEmptyOutflowForm(contaId));
     setOutflowModalOpen(true);
+  };
+
+  const openBalanceModal = (conta) => {
+    setBalanceForm(createEmptyBalanceForm(conta.id, conta.saldoAtual));
+    setBalanceModalOpen(true);
+  };
+
+  const handleUpdateBalance = () => {
+    if (!balanceForm.contaId || !balanceForm.saldoAtual.trim()) return;
+
+    atualizarContaBancaria(balanceForm.contaId, (conta) => ({
+      ...conta,
+      saldoAtual: balanceForm.saldoAtual,
+    }));
+
+    refreshAccounts();
+    setBalanceForm(createEmptyBalanceForm());
+    setBalanceModalOpen(false);
   };
 
   const handleCreateOutflow = () => {
@@ -371,6 +403,13 @@ export default function TotalContas() {
                         onClick={() => openOutflowModal(conta.id)}
                       >
                         Cadastrar Saída
+                      </button>
+                      <button
+                        type="button"
+                        className="synth-button synth-button--secondary"
+                        onClick={() => openBalanceModal(conta)}
+                      >
+                        Editar Saldo
                       </button>
                     </div>
 
@@ -511,15 +550,34 @@ export default function TotalContas() {
         }
       >
         <div className="synth-total__modal-grid">
+          {accountError && (
+            <div
+              style={{
+                gridColumn: '1 / -1',
+                color: '#ff4b4b',
+                backgroundColor: 'rgba(255, 75, 75, 0.1)',
+                padding: '10px',
+                borderRadius: '4px',
+                fontSize: '0.85rem',
+                border: '1px solid #ff4b4b',
+                marginBottom: '10px',
+                fontWeight: 'bold',
+              }}
+            >
+              ⚠️ {accountError}
+            </div>
+          )}
           <label className="synth-field">
             <span className="synth-label">Nome da conta</span>
             <input
               type="text"
               className="synth-control"
+              style={accountError && !accountForm.nome.trim() ? { borderColor: '#ff4b4b' } : {}}
               value={accountForm.nome}
-              onChange={(event) =>
-                setAccountForm((prev) => ({ ...prev, nome: event.target.value }))
-              }
+              onChange={(event) => {
+                setAccountForm((prev) => ({ ...prev, nome: event.target.value }));
+                if (accountError) setAccountError('');
+              }}
               placeholder="Ex: Nubank"
             />
           </label>
@@ -528,10 +586,14 @@ export default function TotalContas() {
             <input
               type="text"
               className="synth-control"
-              value={accountForm.saldoAtual}
-              onChange={(event) =>
-                setAccountForm((prev) => ({ ...prev, saldoAtual: event.target.value }))
+              style={
+                accountError && !accountForm.saldoAtual.trim() ? { borderColor: '#ff4b4b' } : {}
               }
+              value={accountForm.saldoAtual}
+              onChange={(event) => {
+                setAccountForm((prev) => ({ ...prev, saldoAtual: event.target.value }));
+                if (accountError) setAccountError('');
+              }}
               placeholder="Ex: 1500,00"
             />
           </label>
@@ -749,6 +811,46 @@ export default function TotalContas() {
               />
             </label>
           ) : null}
+        </div>
+      </Modal>
+
+      <Modal
+        open={balanceModalOpen}
+        title="Editar Saldo"
+        subtitle="Atualize o saldo atual da conta selecionada."
+        onClose={() => setBalanceModalOpen(false)}
+        footer={
+          <>
+            <button
+              type="button"
+              className="synth-button synth-button--secondary"
+              onClick={() => setBalanceModalOpen(false)}
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              className="synth-button synth-button--primary"
+              onClick={handleUpdateBalance}
+            >
+              Salvar Saldo
+            </button>
+          </>
+        }
+      >
+        <div className="synth-total__modal-grid">
+          <label className="synth-field synth-field--wide">
+            <span className="synth-label">Novo saldo</span>
+            <input
+              type="text"
+              className="synth-control"
+              value={balanceForm.saldoAtual}
+              onChange={(event) =>
+                setBalanceForm((prev) => ({ ...prev, saldoAtual: event.target.value }))
+              }
+              placeholder="Ex: 1500,00"
+            />
+          </label>
         </div>
       </Modal>
     </main>
